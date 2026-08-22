@@ -1,0 +1,29 @@
+# Private configuration and user data
+**/.env
+**/.env.*
+!**/.env.example
+**/workspace/
+**/*Cookies*
+**/*cookie*
+**/*profile*/
+
+# Generated dependencies and builds
+.runtime/
+artifacts/
+LiveAgentStudio.exe
+**/node_modules/
+**/dist/
+**/.next/
+**/.vinext/
+**/.wrangler/
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+**/*.log
+**/*.tar.gz
+
+# Local OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

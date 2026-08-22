@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "live-scout-agent"
+version = "0.2.0"
+description = "Livestream commerce creator discovery and recording orchestration agent"
+requires-python = ">=3.11"
+dependencies = ["openpyxl>=3.1", "playwright>=1.50", "python-docx>=1.2"]
+
+[project.scripts]
+live-scout = "live_scout_agent.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

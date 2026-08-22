@@ -1,0 +1,32 @@
+name: Build Windows release
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  windows-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build portable Windows package
+        shell: powershell
+        run: ./scripts/build_windows_release.ps1
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LiveAgent-Studio-Windows-x64
+          path: |
+            artifacts/LiveAgent-Studio-Windows-x64.zip
+            artifacts/LiveAgent-Studio-Windows-x64.zip.sha256
+      - name: Attach package to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            artifacts/LiveAgent-Studio-Windows-x64.zip
+            artifacts/LiveAgent-Studio-Windows-x64.zip.sha256

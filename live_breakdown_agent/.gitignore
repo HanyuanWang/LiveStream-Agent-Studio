@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+workspace/jobs/
+workspace/output/*.xlsx
+node_modules/
+

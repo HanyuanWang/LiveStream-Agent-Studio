@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>直播主播发现 Agent</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">播</div>
+        <div><strong>主播发现 Agent</strong><span>LIVE SCOUT</span></div>
+      </div>
+      <nav>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span>总览</button>
+        <button class="nav-item" data-view="themes"><span>◎</span>关注领域</button>
+        <button class="nav-item" data-view="chanmama"><span>◉</span>蝉妈妈数据源</button>
+        <button class="nav-item" data-view="import"><span>⇧</span>导入榜单</button>
+        <button class="nav-item" data-view="candidates"><span>◇</span>候选主播</button>
+        <button class="nav-item" data-view="recorder"><span>●</span>录制管理</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="health-dot"></div>
+        <div><b>本地运行</b><span id="healthText">正在检查…</span></div>
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1 id="pageTitle">主播发现总览</h1>
+          <p id="pageSubtitle">从榜单发现低粉高效主播，送入快抖录制流程</p>
+        </div>
+        <button class="primary" id="quickNewTheme">＋ 新建关注领域</button>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero-card">
+          <div>
+            <span class="eyebrow">工作流已连接</span>
+            <h2>从一个关注领域开始</h2>
+            <p>用一句话描述你关注的直播赛道，Agent会把它转换成榜单筛选条件。</p>
+            <button class="light-button" data-go="themes">创建第一个领域 →</button>
+          </div>
+          <div class="flow">
+            <div><b>01</b><span>定义领域</span></div><i>→</i>
+            <div><b>02</b><span>导入榜单</span></div><i>→</i>
+            <div><b>03</b><span>智能评分</span></div><i>→</i>
+            <div><b>04</b><span>进入快抖</span></div>
+          </div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><span>关注领域</span><strong id="metricThemes">0</strong><em>个独立赛道</em></div>
+          <div class="metric"><span>候选主播</span><strong id="metricCandidates">0</strong><em>已进入候选池</em></div>
+          <div class="metric"><span>已通过</span><strong id="metricApproved">0</strong><em>等待加入监控</em></div>
+          <div class="metric"><span>监控中</span><strong id="metricMonitoring">0</strong><em>快抖录制名单</em></div>
+        </div>
+        <div class="two-column">
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow dark">关注领域</span><h3>我的赛道</h3></div><button class="text-button" data-go="themes">管理全部</button></div>
+            <div id="dashboardThemes" class="empty-state">还没有创建关注领域</div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow dark">系统状态</span><h3>连接检查</h3></div></div>
+            <div class="status-list">
+              <div><span>自然语言解析</span><b id="statusAi">检查中</b></div>
+              <div><span>蝉妈妈专用浏览器</span><b id="statusChanmama">未配置</b></div>
+              <div><span>快抖直播录制助手</span><b id="statusQuick">检查中</b></div>
+              <div><span>榜单导入</span><b class="ok">可用</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-themes">
+        <div class="section-intro">
+          <div><span class="eyebrow dark">STEP 01</span><h2>告诉 Agent 你关注什么</h2><p>可以直接说人话。解析结果会先展示给你确认，不会直接开始录制。</p></div>
+        </div>
+        <div class="composer panel">
+          <label for="themeDescription">描述关注领域和理想主播</label>
+          <textarea id="themeDescription" placeholder="例如：我关注中高端女装，主要面向30～45岁女性，客单价200～800元。不要童装、内衣和低价清仓号，优先找30万粉以下、真人出镜、有人设的主播。"></textarea>
+          <div class="composer-foot">
+            <span>建议写清：领域、目标人群、价格带、粉丝上限、包含和排除内容</span>
+            <button class="primary" id="parseTheme">让 Agent 理解</button>
+          </div>
+        </div>
+
+        <div class="panel hidden" id="themeDraftPanel">
+          <div class="panel-head"><div><span class="eyebrow dark">AGENT 理解结果</span><h3>确认筛选条件</h3></div><span class="badge" id="parserBadge">AI解析</span></div>
+          <div class="form-grid">
+            <label>领域名称<input id="draftName"></label>
+            <label>平台一级类目<input id="draftCategory"></label>
+            <label>二级类目<input id="draftSubcategories" placeholder="用逗号分隔"></label>
+            <label>目标人群<input id="draftAudience"></label>
+            <label>最低价格<input id="draftMinPrice" type="number"></label>
+            <label>最高价格<input id="draftMaxPrice" type="number"></label>
+            <label>粉丝上限<input id="draftMaxFollowers" type="number"></label>
+            <label>每天新增<input id="draftDailyLimit" type="number" value="5"></label>
+            <label class="span-2">包含关键词<input id="draftIncludes" placeholder="用逗号分隔"></label>
+            <label class="span-2">排除关键词<input id="draftExcludes" placeholder="用逗号分隔"></label>
+            <label>主播类型<input id="draftAccountTypes" placeholder="真人主播, 达人直播"></label>
+            <label>偏好特征<input id="draftTraits" placeholder="有人设, 低粉高转化"></label>
+            <label>每位先录几场<input id="draftTrials" type="number" value="2"></label>
+            <label class="toggle-row"><input id="draftAutoAdd" type="checkbox"><span>通过后自动加入快抖</span></label>
+          </div>
+          <div class="panel-actions"><button class="secondary" id="cancelDraft">重新描述</button><button class="primary" id="saveTheme">确认创建领域</button></div>
+        </div>
+        <div class="theme-list" id="themeList"></div>
+      </section>
+
+      <section class="view" id="view-chanmama">
+        <div class="section-intro">
+          <div><span class="eyebrow dark">DATA SOURCE</span><h2>蝉妈妈专用浏览器</h2><p>使用独立Chrome配置保存蝉妈妈登录状态，不操作你日常使用的浏览器、鼠标和键盘。</p></div>
+        </div>
+        <div class="two-column">
+          <div class="panel">
+            <div class="panel-head">
+              <div><span class="eyebrow dark">独立会话</span><h3>登录与连接</h3></div>
+              <span class="badge" id="chanmamaBadge">检查中</span>
+            </div>
+            <div class="status-list chanmama-status-list">
+              <div><span>当前状态</span><b id="chanmamaPhase">—</b></div>
+              <div><span>登录状态</span><b id="chanmamaLoginState">—</b></div>
+              <div><span>最近页面</span><b id="chanmamaPageTitle">—</b></div>
+              <div><span>最近更新</span><b id="chanmamaUpdatedAt">—</b></div>
+            </div>
+            <div class="result-box neutral" id="chanmamaMessage">尚未建立蝉妈妈专用登录会话</div>
+            <div class="panel-actions left">
+              <button class="primary" id="startChanmamaLogin">打开专用浏览器登录</button>
+              <button class="secondary hidden" id="completeChanmamaLogin">我已完成登录</button>
+              <button class="secondary hidden" id="stopChanmama">取消当前操作</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow dark">榜单更新</span><h3>从蝉妈妈更新候选池</h3></div><span class="badge">人工触发</span></div>
+            <div class="form-grid compact-grid">
+              <label class="span-2">关注领域<select id="chanmamaTheme"></select></label>
+              <label>检索路径<select id="chanmamaRanking"><option value="creator_goods">达人 → 带货达人榜</option></select></label>
+              <label>周期<select id="chanmamaPeriod"><option value="week">周榜</option><option value="day">日榜</option><option value="month">月榜</option></select></label>
+            </div>
+            <div class="mapping-note">
+              <b>已完成自动校准</b>
+              <span>Agent会自动进入“达人 → 带货达人榜”，选择对应带货分类和日榜/周榜/月榜；随后读取页面可见的直播销售额区间、销量区间、粉丝数、带货类目、直播场次和直播时间。灰色小字的销售额指数、销量指数会单独保存，不会冒充实际成交数据。</span>
+            </div>
+            <div class="panel-actions left"><button class="primary" id="startChanmamaExport">从蝉妈妈更新</button></div>
+            <div class="path-box" id="chanmamaDownloadPath">尚无下载文件</div>
+          </div>
+        </div>
+        <div class="panel compliance-note">
+          <div class="panel-head"><div><span class="eyebrow dark">运行边界</span><h3>低频、正常导出</h3></div></div>
+          <p>只使用蝉妈妈页面提供的正常登录、带货达人榜筛选和导出功能；不调用隐藏接口，不绕过验证码、会员权限或导出限制。遇到登录验证或平台阻止时会暂停。</p>
+        </div>
+      </section>
+
+      <section class="view" id="view-import">
+        <div class="section-intro"><div><span class="eyebrow dark">STEP 02</span><h2>导入蝉妈妈榜单</h2><p>支持 XLSX、CSV。Agent会识别常见字段，并在同一领域内部计算排名。</p></div></div>
+        <div class="panel import-panel">
+          <div class="form-grid">
+            <label>关注领域<select id="importTheme"></select></label>
+            <label>数据来源<select id="importSource"><option>蝉妈妈</option><option>抖音官方榜单</option><option>其他</option></select></label>
+          </div>
+          <label class="drop-zone" for="importFile">
+            <input id="importFile" type="file" accept=".xlsx,.xlsm,.csv,.txt">
+            <span class="upload-icon">⇧</span>
+            <strong id="fileLabel">选择榜单文件</strong>
+            <em>支持 .xlsx / .csv，文件最大30MB</em>
+          </label>
+          <div class="mapping-note">
+            <b>自动识别字段</b>
+            <span>主播昵称 · 粉丝数 · 类目 · 预估销售额 · 销量 · GPM · UV价值 · 直播时长 · 主页链接</span>
+          </div>
+          <div class="panel-actions"><button class="primary" id="uploadLeaderboard">导入并评分</button></div>
+          <div class="result-box hidden" id="importResult"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-candidates">
+        <div class="section-intro horizontal">
+          <div><span class="eyebrow dark">STEP 03</span><h2>候选主播池</h2><p>评分只在同一领域内部比较；排除词和粉丝上限会降低或淘汰候选。</p></div>
+          <div class="filters"><select id="candidateTheme"><option value="">全部领域</option></select><select id="candidateStatus"><option value="">全部状态</option><option value="candidate">候选</option><option value="approved">已通过</option><option value="monitoring">监控中</option><option value="rejected">已排除</option></select></div>
+        </div>
+        <div class="panel manual-candidate-panel">
+          <div class="panel-head">
+            <div><span class="eyebrow dark">手动关注</span><h3>通过抖音主页链接导入主播</h3></div>
+          </div>
+          <div class="form-grid manual-candidate-form">
+            <label>关注领域<select id="manualCandidateTheme"><option value="">请先创建关注领域</option></select></label>
+            <label>主播名称<input id="manualCandidateName" type="text" maxlength="80" placeholder="例如 ROMI"></label>
+            <label class="span-2">抖音主页链接<input id="manualCandidateUrl" type="url" placeholder="粘贴 https://www.douyin.com/user/...，也支持抖音分享文字"></label>
+          </div>
+          <div class="mapping-note"><b>为什么要填写名称</b><span>快抖会用主播名称建立录像文件夹，Agent依靠这个名称把录像准确匹配到对应主播。</span></div>
+          <div class="panel-actions"><button class="primary" id="importManualCandidate">导入候选主播</button></div>
+          <div class="result-box hidden" id="manualCandidateResult"></div>
+        </div>
+        <div class="bulk-bar">
+          <span>已选择 <b id="selectedCount">0</b> 位主播</span>
+          <div><button class="secondary" data-status="rejected">排除</button><button class="secondary" data-status="approved">通过</button><button class="secondary" id="exportSelected">导出名单</button><button class="secondary" id="generateReports">生成达人拆解</button><button class="primary" id="addSelectedToQuick">自动加入快抖</button></div>
+        </div>
+        <div class="report-status hidden" id="reportStatus"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><input type="checkbox" id="selectAll"></th><th>主播</th><th>领域</th><th>粉丝</th><th>销售表现</th><th>效率</th><th>推荐分</th><th>推荐理由</th><th>状态</th></tr></thead>
+            <tbody id="candidateRows"><tr><td colspan="9" class="table-empty">导入榜单后，这里会出现候选主播</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view" id="view-recorder">
+        <div class="section-intro"><div><span class="eyebrow dark">STEP 04</span><h2>录制管理</h2><p>把选中的主播加入快抖，启动或停止直播监控。这里仅负责录制，不会自动上传、转写或拆解录像。</p></div></div>
+        <div class="two-column">
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow dark">已检测</span><h3>快抖直播录制助手</h3></div><span class="badge" id="recorderBadge">检查中</span></div>
+            <div class="path-box" id="recorderPath">—</div>
+            <div class="panel-actions left"><button class="primary" id="launchRecorder">打开快抖</button><button class="secondary" id="startQuickMonitor">启动监控</button><button class="secondary" id="stopQuickMonitor">停止监控</button></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow dark">录制范围</span><h3>仅监控已加入的主播</h3></div><span class="badge ok">录制模式</span></div>
+            <ol class="roadmap">
+              <li class="done"><b>已完成</b><span>候选主播评分与名单生成</span></li>
+              <li class="done"><b>已接入</b><span>通过快抖协议自动添加主页链接、启动或停止监控</span></li>
+              <li><b>不包含</b><span>录像不会在这里自动上传、转写或生成拆解 Excel</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="panel relay-panel">
+          <div class="relay-pool">
+            <div class="panel-head compact-head"><div><span class="eyebrow dark">当前录制名单</span><h3>已加入快抖录制的主播</h3></div><span class="badge" id="relayPoolCount">0 位</span></div>
+            <div id="relayCandidateDetails" class="relay-candidate-list"><div class="empty-state">尚未把主播加入录制名单</div></div>
+          </div>
+          <p class="relay-note">录制文件由快抖保存在其设置的本地目录中。本页不会扫描录像，也不会产生转写或云存储费用。</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

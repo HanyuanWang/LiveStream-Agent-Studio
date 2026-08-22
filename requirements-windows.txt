@@ -1,0 +1,5 @@
+openpyxl>=3.1
+oss2>=2.18
+playwright>=1.50
+python-docx>=1.2
+yt-dlp>=2025.1

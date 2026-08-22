@@ -1,0 +1,7 @@
+workspace/jobs/
+workspace/output/
+workspace/service/
+node_modules/
+__pycache__/
+*.pyc
+

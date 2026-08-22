@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>直播复盘 Agent</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">INTERNAL LIVE REVIEW</div>
+        <h1>直播复盘 Agent</h1>
+        <p>把逐字稿、成交和流量放在同一条时间线上，找出真正有效和失效的话术循环。</p>
+      </div>
+      <div class="badge" id="health">正在连接</div>
+    </header>
+
+    <section class="card">
+      <div class="step">STEP 01</div>
+      <h2>上传同一场直播的资料</h2>
+      <form id="job-form">
+        <div class="grid">
+          <label class="file required"><span>逐字稿拆解 Excel</span><small>必填，直播拆解 Agent 的“_拆解.xlsx”</small><input name="breakdown" type="file" accept=".xlsx" required></label>
+          <label class="file"><span>订单明细</span><small>CSV 或 XLSX，包含支付时间、商品、金额和数量</small><input name="orders" type="file" accept=".csv,.xlsx"></label>
+          <label class="file"><span>分钟趋势</span><small>分钟级流量、成交或转化趋势 Excel</small><input name="minute" type="file" accept=".xlsx"></label>
+          <label class="file"><span>整场数据</span><small>巨量百应整场数据 Excel，可选</small><input name="session" type="file" accept=".xlsx"></label>
+        </div>
+        <div class="fields">
+          <label><span>大屏最终 GMV（元）</span><input name="official_gmv" type="number" min="0" step="0.01" placeholder="例如 31664"></label>
+          <label><span>直播开始时间</span><input name="live_start" type="text" placeholder="例如 2026-08-10 13:40:00"></label>
+          <label><span>直播名称</span><input name="session_name" type="text" placeholder="例如 某主播 2026-08-10"></label>
+        </div>
+        <div class="notice">如果没有填写开始时间，Agent 会尝试从分钟数据、整场文件和文件名中识别；无法识别时仍会生成逐字稿复盘，但成交对齐会标注为缺失。</div>
+        <button id="submit" type="submit">开始复盘</button>
+      </form>
+    </section>
+
+    <section class="card status-card" id="status-card" hidden>
+      <div class="step">STEP 02</div>
+      <div class="status-head"><h2>处理进度</h2><strong id="status-label">等待开始</strong></div>
+      <div class="progress"><i id="progress-bar"></i></div>
+      <p id="status-message">正在准备资料</p>
+      <pre id="status-log"></pre>
+    </section>
+
+    <section class="card" id="result-card" hidden>
+      <div class="step">STEP 03</div>
+      <h2>复盘完成</h2>
+      <p id="result-summary"></p>
+      <div class="downloads" id="downloads"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

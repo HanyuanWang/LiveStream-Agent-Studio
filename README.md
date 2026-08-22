@@ -1,0 +1,214 @@
+<div align="center">
+
+# LiveAgent Studio
+
+面向直播电商团队的 Windows 本地 AI 工作台
+
+把主播发现、直播拆解、直播复盘和短视频编导放进一个统一入口。
+
+![Platform](https://img.shields.io/badge/platform-Windows-0b6b4f)
+![Release](https://img.shields.io/badge/status-v0.2.0--beta-d89b24)
+![License](https://img.shields.io/badge/source%20license-MIT-2f6f61)
+![Mode](https://img.shields.io/badge/mode-local--first-17483c)
+
+</div>
+
+> [!IMPORTANT]
+> 当前是公开测试版。请先使用非敏感素材验证环境、账号权限和输出结果，再投入正式业务。
+
+## LiveAgent Studio 是什么
+
+直播团队经常需要在榜单、录屏、逐字稿、流量表和脚本文件之间来回切换。LiveAgent Studio 把这些工作组织成四个相互衔接的 Agent，并提供统一的任务中心、连接设置和本地文件管理。
+
+它是一个 **Windows 本地网页应用**：双击 `LiveAgentStudio.exe` 后，程序会在电脑上启动本地服务，并用默认浏览器打开工作台。页面地址是 `127.0.0.1`，不是部署在互联网上的网站，也不会把本机端口公开给其他电脑。
+
+## 四个 Agent
+
+| Agent | 输入 | 主要工作 | 输出 |
+| --- | --- | --- | --- |
+| 主播发现 | 关注领域、用户账号可见的蝉妈妈榜单或主播主页 | 管理候选主播、生成达人拆解、加入可选录制流程 | 候选主播库、达人报告、录制名单 |
+| 直播拆解 | 完整直播视频 | 提取音频、云端语音转写、按内容组织事件和逐字稿 | 带秒级时间戳的拆解 Excel |
+| 直播复盘 | 直播视频、同场巨量百应分钟流量表 | 对齐逐字稿与进入、离开、在线、停留、互动、商品曝光和点击变化 | 复盘 Excel、Word 和处理说明 |
+| 视频编导 | 用户主动粘贴的参考短视频链接 | 提取真实参考逐字稿，基于有效素材生成原创方案 | 原创脚本、分镜和拍摄建议 |
+
+## 快速开始
+
+### 1. 下载
+
+在仓库右侧进入 **Releases**，下载：
+
+- `LiveAgent-Studio-Windows-x64.zip`
+- `LiveAgent-Studio-Windows-x64.zip.sha256`
+
+不要只下载源码，也不要只复制 EXE。完整运行需要 ZIP 内的 `.runtime` 和各 Agent 目录。
+
+### 2. 校验文件
+
+在 ZIP 所在目录打开 PowerShell：
+
+```powershell
+(Get-FileHash .\LiveAgent-Studio-Windows-x64.zip -Algorithm SHA256).Hash
+```
+
+确认结果与 `.sha256` 文件中的值一致。无法确认下载来源或校验不一致时，请不要运行。
+
+### 3. 解压并启动
+
+完整解压 ZIP，双击：
+
+```text
+LiveAgentStudio.exe
+```
+
+程序准备好后会自动打开 `http://127.0.0.1:4173/`。当前 Beta 启动器尚未使用商业代码签名证书，Windows 可能显示 SmartScreen 提示；请只运行从本仓库 Releases 下载且校验一致的文件。
+
+### 4. 完成首次设置
+
+进入左侧 **设置与连接**，根据页面引导配置：
+
+1. 自己的阿里云百炼 DashScope API Key。
+2. 私有 OSS Bucket。
+3. 仅覆盖指定 Bucket/对象前缀的 RAM AccessKey。
+4. 如需“加入快抖录制”，再粘贴本机录制助手 EXE 的完整路径；这是可选项。
+
+保存后点击“实际验证 Qwen 与 OSS”。验证通过后，再开始直播拆解或复盘任务。
+
+## 数据如何流动
+
+| 数据 | 默认位置或去向 |
+| --- | --- |
+| 任务记录、数据库、输出文件 | 当前电脑的项目 `workspace` |
+| 蝉妈妈、抖音登录状态 | 当前电脑的专用浏览器 Profile |
+| API Key 与 OSS 凭据 | 当前电脑被 Git 忽略的 `.env`，Windows 下限制为当前用户和 SYSTEM 访问 |
+| 转写音频 | 临时上传到用户自己的 OSS，再交给 DashScope 读取 |
+| OSS 临时音频 | 任务结束后程序尝试删除 |
+| 抖音下载 Cookie 文件 | 仅在处理期间临时生成，使用后立即删除 |
+
+LiveAgent Studio 不附带任何开发者 API Key、Cookie、浏览器 Profile 或真实业务数据。云端转写会使用用户自己的阿里云账号并产生相应费用。
+
+## 运行架构
+
+```mermaid
+flowchart LR
+    EXE[LiveAgentStudio.exe] --> UI[本地工作台<br/>127.0.0.1:4173]
+    UI --> GW[本地网关与任务中心<br/>127.0.0.1:8785]
+    GW --> Scout[主播发现<br/>127.0.0.1:8765]
+    GW --> Retro[直播复盘<br/>127.0.0.1:8775]
+    GW --> Breakdown[直播拆解]
+    GW --> Director[视频编导]
+    Breakdown --> OSS[用户自己的 OSS]
+    Director --> OSS
+    OSS --> Qwen[DashScope 转写与分析]
+```
+
+所有本地 HTTP 服务只监听 `127.0.0.1`。网关限制允许访问的 Host 和网页 Origin，不接受普通外部网页直接调用。
+
+更详细的说明见 [架构说明](docs/架构说明.md)。
+
+## 系统和第三方要求
+
+- Windows 10 或 Windows 11，64 位。
+- Chrome 或 Edge，用于本地工作台以及需要登录的第三方页面。
+- 用户自己的阿里云百炼与 OSS 账号。
+- 蝉妈妈功能取决于用户账号正常可见的页面、会员权限和平台风控。
+- 抖音链接可能要求登录、验证码或刷新访问状态。
+- 快抖直播录制助手不包含在本项目内，需要用户自行合法获取和安装。
+
+本项目不会绕过登录、验证码、会员限制、访问控制或第三方平台风控。
+
+## 从源码运行
+
+开发环境要求：
+
+- Windows 10/11
+- Python 3.11+
+- Node.js 22.13+
+- Chrome 或 Edge
+
+```powershell
+.\scripts\setup-development.ps1
+.\liveagent-studio\01_启动_LiveAgent_Studio.ps1
+```
+
+前端单独开发：
+
+```powershell
+cd liveagent-studio
+npm ci
+npm run dev
+```
+
+## 测试与构建
+
+前端构建测试：
+
+```powershell
+cd liveagent-studio
+npm test
+```
+
+Python Agent 测试：
+
+```powershell
+cd live_scout_agent
+python -m unittest discover -s tests -v
+```
+
+`live_breakdown_agent` 和 `live_retro_agent` 可使用相同命令运行各自测试。
+
+构建便携 Windows 发布包：
+
+```powershell
+.\scripts\build_windows_release.ps1
+```
+
+创建 `v*` Git 标签也会触发 GitHub Actions，生成 ZIP 和 SHA256 校验文件。完整流程见 [GitHub 发布操作手册](docs/GitHub发布操作手册.md)。
+
+## 项目结构
+
+```text
+liveagent-studio/        统一工作台与本地网关
+live_scout_agent/        主播发现、达人拆解和录制编排
+live_breakdown_agent/    长直播转写与事件拆解
+live_retro_agent/        逐字稿与分钟流量复盘
+launcher/                Windows EXE 启动器
+scripts/                 开发环境和发布包构建脚本
+docs/                    架构、FAQ、发布与隐私说明
+.github/                 CI、Release、Issue 与依赖更新配置
+```
+
+## 当前限制
+
+- 当前只提供 Windows x64 发布包。
+- EXE 尚未使用商业代码签名证书。
+- 抖音和蝉妈妈页面发生变化时，相关读取流程可能需要更新。
+- 超长直播的转写速度和费用取决于文件大小、网络和云服务状态。
+- 严格 ESLint 仍有存量类型与无障碍问题，现阶段以构建测试作为前端 CI 门槛。
+- 当前复盘聚焦话术与分钟流量变化，不把 GMV、成交或订单字段作为结论依据。
+
+## Roadmap
+
+- [ ] Windows 代码签名与更清晰的安装体验
+- [ ] 缩小便携包体积并固定第三方运行时校验值
+- [ ] 补充界面截图、演示视频和脱敏示例结果
+- [ ] 清理前端类型与无障碍告警
+- [ ] 增加任务数据保留时间和一键清理设置
+- [ ] 扩展更多经过验证的直播复盘输入格式
+
+## 参与项目
+
+欢迎提交可复现的 Bug、文档改进和范围清晰的 Pull Request。提交前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+请勿在 Issue、截图或日志中上传 API Key、AccessKey、Cookie、浏览器 Profile、真实业务数据或包含个人信息的完整本机路径。
+
+安全问题请按照 [SECURITY.md](SECURITY.md) 私密报告，不要公开披露漏洞细节。
+
+## 使用边界
+
+用户应确保有权访问、下载、转写和分析所提交的直播或短视频内容，并遵守抖音、蝉妈妈、阿里云及其他相关服务的条款。项目提供的是本地工作流工具，不对第三方账号权限、内容授权、云服务费用或平台规则变化作保证。
+
+## License
+
+项目源码采用 [MIT License](LICENSE)。Windows 发布包同时包含 Python、Node.js、FFmpeg 及其他第三方组件，它们分别遵循自己的许可证，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+版本变化见 [CHANGELOG.md](CHANGELOG.md)，常见问题见 [docs/常见问题.md](docs/常见问题.md)。

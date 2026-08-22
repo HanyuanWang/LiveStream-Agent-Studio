@@ -1,0 +1,9 @@
+[project]
+name = "live-retro-agent"
+version = "0.2.0"
+description = "Internal livestream speech and sales review agent"
+requires-python = ">=3.11"
+dependencies = ["openpyxl>=3.1", "python-docx>=1.2"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /liveagent-studio
+    schedule:
+      interval: monthly
+  - package-ecosystem: pip
+    directory: /live_scout_agent
+    schedule:
+      interval: monthly
+  - package-ecosystem: pip
+    directory: /live_breakdown_agent
+    schedule:
+      interval: monthly
+  - package-ecosystem: pip
+    directory: /live_retro_agent
+    schedule:
+      interval: monthly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

@@ -1,0 +1,35 @@
+name: Bug report
+description: 报告可复现的问题，请先删除敏感信息
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 请勿上传 API Key、Cookie、浏览器 Profile、真实业务数据或包含个人路径的完整日志。
+  - type: input
+    id: version
+    attributes:
+      label: 版本
+      placeholder: v0.2.0-beta
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: 模块
+      options: [主播发现, 直播拆解, 直播复盘, 视频编导, 启动与设置, 其他]
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请使用脱敏示例。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果与实际结果
+    validations:
+      required: true

@@ -1,0 +1,7 @@
+workspace/*
+!workspace/uploads/
+!workspace/exports/
+.env
+__pycache__/
+*.pyc
+
