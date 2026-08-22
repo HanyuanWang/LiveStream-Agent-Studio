@@ -195,10 +195,10 @@ LiveStream Agent Studio 不包含快抖直播录制助手，也不会自动下�
 
 ```mermaid
 flowchart LR
-    EXE[LiveAgentStudio.exe] --> UI[本地工作台<br/>127.0.0.1:4173]
-    UI --> GW[本地网关与任务中心<br/>127.0.0.1:8785]
-    GW --> Scout[主播发现<br/>127.0.0.1:8765]
-    GW --> Retro[直播复盘<br/>127.0.0.1:8775]
+    EXE[LiveAgentStudio.exe] --> UI[本地工作台]
+    UI --> GW[本地网关与任务中心]
+    GW --> Scout[主播发现]
+    GW --> Retro[直播复盘]
     GW --> Breakdown[直播拆解]
     GW --> Director[视频编导]
     Breakdown --> OSS[用户自己的 OSS]
