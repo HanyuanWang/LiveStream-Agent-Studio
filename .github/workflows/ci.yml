@@ -34,7 +34,7 @@ jobs:
         working-directory: liveagent-studio
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "22.18.0"
           cache: npm
