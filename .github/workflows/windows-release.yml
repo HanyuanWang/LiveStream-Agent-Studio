@@ -12,7 +12,7 @@ jobs:
   windows-release:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build portable Windows package
         shell: pwsh
         run: ./scripts/build_windows_release.ps1
