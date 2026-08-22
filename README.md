@@ -14,7 +14,7 @@
 </div>
 
 > [!IMPORTANT]
-> 当前是公开测试版。请先使用非敏感素材验证环境、账号权限和输出结果，再投入正式业务。
+> 请先使用非敏感素材验证环境、账号权限和输出结果，再投入正式业务。
 
 LiveStream Agent Studio 是面向直播电商团队打造的 Windows 本地 AI Agent Studio。
 
