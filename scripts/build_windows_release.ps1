@@ -51,6 +51,8 @@ try {
   $getPip = Join-Path $temp 'get-pip.py'
   Invoke-ReleaseDownload 'https://bootstrap.pypa.io/get-pip.py' $getPip
   & (Join-Path $pythonDir 'python.exe') $getPip
+  & (Join-Path $pythonDir 'python.exe') -m pip install --no-warn-script-location --upgrade pip setuptools wheel
+  if ($LASTEXITCODE -ne 0) { throw 'Python build tools installation failed.' }
   Push-Location $stage
   try {
     & (Join-Path $pythonDir 'python.exe') -m pip install --no-warn-script-location -r (Join-Path $stage 'requirements-windows.txt')
