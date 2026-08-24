@@ -1,9 +1,14 @@
-面向直播电商团队的 Windows 本地优先 AI 工作台
+### 面向直播电商团队的 Windows 本地优先 AI 工作台
 ### A local-first AI workspace for livestream commerce teams on Windows
 
 把主播发现、直播拆解、直播复盘和短视频编导放进一个统一入口。
 
 Bring creator discovery, livestream breakdown, performance review, and short-form video planning into one unified workspace.
+
+## 项目维护者 / Maintainers
+
+- [HanyuanWang](https://github.com/HanyuanWang)
+- [JialiangFu](https://github.com/JialiangFu)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0b6b4f)
 ![Release](https://img.shields.io/badge/status-v0.2.0--beta-d89b24)
