@@ -35,53 +35,45 @@ This is the project's first public release. It is intended for evaluation, testi
 
 ---
 
-## ✨ 核心能力
-## ✨ Core Capabilities
+## ✨ 核心能力 Core Capabilities
 
 ### 01 · Creator Scout Agent｜主播发现
-### 01 · Creator Scout Agent
 
 管理关注领域、候选主播和达人研究任务，读取用户账号正常可见的蝉妈妈榜单或主播页面，生成结构化达人拆解，并将候选主播加入后续可选录制流程。
 
 Manage research categories, candidate creators, and creator-analysis tasks. The Agent can read Chanmama rankings or creator pages normally visible to the signed-in user, generate structured creator profiles, and add selected creators to an optional recording workflow.
 
 ### 02 · Live Breakdown Agent｜直播拆解
-### 02 · Live Breakdown Agent
 
 将完整直播视频转化为带秒级时间戳的结构化逐字稿，自动完成音频提取、云端转写和内容整理，并输出可继续分析的 Excel 文件。
 
 Convert full-length livestream recordings into structured transcripts with second-level timestamps. The workflow extracts audio, submits it for cloud transcription, organizes the content, and exports an Excel workbook ready for further analysis.
 
 ### 03 · Live Review Agent｜直播复盘
-### 03 · Live Review Agent
 
 对齐直播逐字稿与同场分钟级流量数据，分析不同话术阶段对应的进入、离开、在线、停留、互动、商品曝光与点击变化，输出 Excel 和 Word 复盘报告。
 
 Align a livestream transcript with minute-level traffic data from the same session. Analyze how different speech stages relate to changes in entries, exits, concurrent viewers, watch time, engagement, product impressions, and product clicks. Results are exported as Excel and Word reports.
 
 ### 04 · Video Director Agent｜短视频编导
-### 04 · Video Director Agent
 
 根据用户提供的参考短视频链接提取真实逐字稿，在保留内容逻辑而非复制原文的前提下，生成原创口播脚本、内容结构、分镜与拍摄建议。
 
 Extract a verified transcript from a short-video reference link supplied by the user. Based on the reference's underlying content logic—without copying its wording—the Agent generates an original spoken script, content structure, storyboard, and production recommendations.
 
 ### Unified Task Center｜统一任务中心
-### Unified Task Center
 
 集中查看任务进度、运行状态、失败原因和输出文件，减少在多个脚本、文件夹和工具之间反复切换。
 
 Track task progress, runtime status, failure reasons, and output files in one place, reducing the need to switch repeatedly between scripts, folders, and tools.
 
 ### Local Settings Hub｜本地设置中心
-### Local Settings Hub
 
 统一配置用户自己的阿里云百炼 DashScope、OSS、平台登录状态，以及可选的直播录制助手路径。
 
 Configure your own Alibaba Cloud Model Studio (DashScope), OSS storage, platform sign-in state, and the optional path to a local livestream recording assistant.
 
-## 四个 Agent
-## Four Agents
+## 四个 Agent Four Agents
 
 | Agent | 输入 / Input | 主要工作 / What It Does | 输出 / Output |
 | --- | --- | --- | --- |
@@ -90,8 +82,7 @@ Configure your own Alibaba Cloud Model Studio (DashScope), OSS storage, platform
 | 直播复盘<br>Live Review | 直播视频、同场巨量百应分钟流量表<br>Livestream video and minute-level Ocean Engine E-commerce traffic data from the same session | 对齐逐字稿与进入、离开、在线、停留、互动、商品曝光和点击变化<br>Aligns speech with entries, exits, concurrent viewers, watch time, engagement, product impressions, and clicks | 复盘 Excel、Word 和处理说明<br>Excel and Word review reports, plus processing notes |
 | 视频编导<br>Video Director | 用户主动粘贴的参考短视频链接<br>Short-video reference links submitted by the user | 提取真实参考逐字稿，基于有效素材生成原创方案<br>Extracts a verified reference transcript and creates an original content plan from valid source material | 原创脚本、分镜和拍摄建议<br>Original script, storyboard, and production guidance |
 
-## 快速开始
-## Quick Start
+## 快速开始 Quick Start
 
 ### 1. 下载
 ### 1. Download the Release
@@ -161,8 +152,7 @@ Open **Settings & Connections** from the sidebar and configure:
 
 Save the settings and select **Verify Qwen & OSS**. Start a breakdown or review task only after the verification succeeds.
 
-## 数据如何流动
-## How Data Flows
+## 数据如何流动 How Data Flows
 
 | 数据 / Data | 默认位置或去向 / Default Location or Destination |
 | --- | --- |
@@ -179,8 +169,7 @@ LiveAgent Studio does not include developer API keys, cookies, browser profiles,
 
 ---
 
-## 🧩 使用前需要准备什么
-## 🧩 Prerequisites
+## 🧩 使用前需要准备什么 Prerequisites
 
 LiveAgent Studio 提供本地工作台和工作流编排，但不会附带第三方账号、会员、云服务额度或外部录制软件。
 
@@ -321,8 +310,7 @@ D:\直播录屏\live-record-monitor\快抖直播录制助手.exe
 
 This is an optional third-party integration. Leaving it unconfigured does not affect the other Agents.
 
-## 运行架构
-## Architecture
+## 运行架构 Architecture
 
 ```mermaid
 flowchart LR
@@ -341,8 +329,7 @@ flowchart LR
 
 The local gateway restricts permitted hosts and web origins. It does not accept requests from arbitrary external web pages.
 
-## 系统和第三方要求
-## System and Third-Party Requirements
+## 系统和第三方要求 System and Third-Party Requirements
 
 - Windows 10 或 Windows 11，64 位。  
   Windows 10 or Windows 11, 64-bit.
@@ -361,8 +348,7 @@ The local gateway restricts permitted hosts and web origins. It does not accept 
 
 This project does not bypass authentication, CAPTCHA challenges, subscription restrictions, access controls, or third-party platform risk controls.
 
-## 从源码运行
-## Running from Source
+## 从源码运行 Running from Source
 
 开发环境要求：
 
@@ -392,8 +378,7 @@ npm ci
 npm run dev
 ```
 
-## 测试与构建
-## Testing and Building
+## 测试与构建 Testing and Building
 
 前端构建测试：
 
@@ -429,8 +414,7 @@ Build the portable Windows release package:
 
 Creating a `v*` Git tag also triggers GitHub Actions to generate the ZIP package and its SHA-256 checksum. See the [GitHub Release Guide](docs/GitHub发布操作手册.md) for the complete process.
 
-## 项目结构
-## Project Structure
+## 项目结构 Project Structure
 
 ```text
 liveagent-studio/        统一工作台与本地网关 / Unified workspace and local gateway
@@ -443,8 +427,7 @@ docs/                    架构、FAQ、发布与隐私说明 / Architecture, FA
 .github/                 CI、Release、Issue 与依赖更新配置 / CI, Releases, Issues, and dependency updates
 ```
 
-## 当前限制
-## Current Limitations
+## 当前限制 Current Limitations
 
 - 当前只提供 Windows x64 发布包。  
   Only a Windows x64 package is currently available.
@@ -459,8 +442,7 @@ docs/                    架构、FAQ、发布与隐私说明 / Architecture, FA
 - 当前复盘聚焦话术与分钟流量变化，不把 GMV、成交或订单字段作为结论依据。  
   The current review workflow focuses on speech and minute-level traffic changes. It does not use GMV, transaction, or order fields as the basis for its conclusions.
 
-## 路线图
-## Roadmap
+## 路线图 Roadmap
 
 - [ ] Windows 代码签名与更清晰的安装体验。  
       Add Windows code signing and improve the installation experience.
@@ -475,8 +457,7 @@ docs/                    架构、FAQ、发布与隐私说明 / Architecture, FA
 - [ ] 扩展更多经过验证的直播复盘输入格式。  
       Support more validated livestream review input formats.
 
-## 参与项目
-## Contributing
+## 参与项目 Contributing
 
 欢迎提交可复现的 Bug、文档改进和范围清晰的 Pull Request。提交前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
@@ -490,8 +471,7 @@ Do not include API keys, AccessKeys, cookies, browser profiles, real business da
 
 Report security issues privately according to [SECURITY.md](SECURITY.md). Do not disclose vulnerability details in a public Issue.
 
-## 使用边界
-## Responsible Use
+## 使用边界 Responsible Use
 
 用户应确保有权访问、下载、转写和分析所提交的直播或短视频内容，并遵守抖音、蝉妈妈、阿里云及其他相关服务的条款。
 
@@ -501,8 +481,7 @@ Users are responsible for ensuring that they have the right to access, download,
 
 LiveAgent Studio is a local workflow tool. It does not guarantee third-party account access, content authorization, cloud-service pricing, or continued compatibility with changes to external platform rules.
 
-## 许可证
-## License
+## 许可证 License
 
 项目源码采用 [MIT License](LICENSE)。Windows 发布包同时包含 Python、Node.js、FFmpeg 及其他第三方组件，它们分别遵循自己的许可证，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
