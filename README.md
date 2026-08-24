@@ -1,14 +1,13 @@
+<div align="center">
+
+# LiveStream Agent Studio
+
 ### 面向直播电商团队的 Windows 本地优先 AI 工作台
 ### A local-first AI workspace for livestream commerce teams on Windows
 
 把主播发现、直播拆解、直播复盘和短视频编导放进一个统一入口。
 
 Bring creator discovery, livestream breakdown, performance review, and short-form video planning into one unified workspace.
-
-## 项目维护者 / Maintainers
-
-- [HanyuanWang](https://github.com/HanyuanWang)
-- [JialiangFu](https://github.com/JialiangFu)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0b6b4f)
 ![Release](https://img.shields.io/badge/status-v0.2.0--beta-d89b24)
@@ -22,17 +21,17 @@ Bring creator discovery, livestream breakdown, performance review, and short-for
 >
 > Before using LiveAgent Studio in production, validate your environment, account permissions, and output quality with non-sensitive test materials.
 
-LiveAgent Studio 是面向直播电商团队打造的 Windows 本地优先 AI Agent 工作台。
+LiveStream Agent Studio 是面向直播电商团队打造的 Windows 本地优先 AI Agent 工作台。
 
-LiveAgent Studio is a local-first Windows AI Agent workspace built for livestream commerce teams.
+LiveStream Agent Studio is a local-first Windows AI Agent workspace built for livestream commerce teams.
 
 本版本将主播发现、直播拆解、话术与流量复盘、短视频内容编导整合到统一入口，帮助直播运营、投放、内容和复盘团队，将榜单、录屏、逐字稿、流量数据与脚本资产沉淀为可追踪、可复用的完整工作流。
 
 It brings creator discovery, livestream breakdown, speech-and-traffic review, and short-form video planning into a single interface. The goal is to help operations, media-buying, content, and review teams turn rankings, recordings, transcripts, traffic data, and scripts into traceable and reusable workflows.
 
-这是项目的首个公开 Beta 版本，适合体验、测试和内部研究使用。
+这是项目的首个公开版本，适合体验、测试和内部研究使用。
 
-This is the project's first public Beta release. It is intended for evaluation, testing, and internal research.
+This is the project's first public release. It is intended for evaluation, testing, and internal research.
 
 ---
 
@@ -40,36 +39,42 @@ This is the project's first public Beta release. It is intended for evaluation, 
 ## ✨ Core Capabilities
 
 ### 01 · Creator Scout Agent｜主播发现
+### 01 · Creator Scout Agent
 
 管理关注领域、候选主播和达人研究任务，读取用户账号正常可见的蝉妈妈榜单或主播页面，生成结构化达人拆解，并将候选主播加入后续可选录制流程。
 
 Manage research categories, candidate creators, and creator-analysis tasks. The Agent can read Chanmama rankings or creator pages normally visible to the signed-in user, generate structured creator profiles, and add selected creators to an optional recording workflow.
 
 ### 02 · Live Breakdown Agent｜直播拆解
+### 02 · Live Breakdown Agent
 
 将完整直播视频转化为带秒级时间戳的结构化逐字稿，自动完成音频提取、云端转写和内容整理，并输出可继续分析的 Excel 文件。
 
 Convert full-length livestream recordings into structured transcripts with second-level timestamps. The workflow extracts audio, submits it for cloud transcription, organizes the content, and exports an Excel workbook ready for further analysis.
 
 ### 03 · Live Review Agent｜直播复盘
+### 03 · Live Review Agent
 
 对齐直播逐字稿与同场分钟级流量数据，分析不同话术阶段对应的进入、离开、在线、停留、互动、商品曝光与点击变化，输出 Excel 和 Word 复盘报告。
 
 Align a livestream transcript with minute-level traffic data from the same session. Analyze how different speech stages relate to changes in entries, exits, concurrent viewers, watch time, engagement, product impressions, and product clicks. Results are exported as Excel and Word reports.
 
 ### 04 · Video Director Agent｜短视频编导
+### 04 · Video Director Agent
 
 根据用户提供的参考短视频链接提取真实逐字稿，在保留内容逻辑而非复制原文的前提下，生成原创口播脚本、内容结构、分镜与拍摄建议。
 
 Extract a verified transcript from a short-video reference link supplied by the user. Based on the reference's underlying content logic—without copying its wording—the Agent generates an original spoken script, content structure, storyboard, and production recommendations.
 
 ### Unified Task Center｜统一任务中心
+### Unified Task Center
 
 集中查看任务进度、运行状态、失败原因和输出文件，减少在多个脚本、文件夹和工具之间反复切换。
 
 Track task progress, runtime status, failure reasons, and output files in one place, reducing the need to switch repeatedly between scripts, folders, and tools.
 
 ### Local Settings Hub｜本地设置中心
+### Local Settings Hub
 
 统一配置用户自己的阿里云百炼 DashScope、OSS、平台登录状态，以及可选的直播录制助手路径。
 
