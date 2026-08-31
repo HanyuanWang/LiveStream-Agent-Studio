@@ -39,7 +39,7 @@
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.59.3",
-    "vinext": "1.0.0-beta.2",
+    "vinext": "1.0.0-beta.7",
     "vite": "8.0.13",
     "wrangler": "4.92.0"
   },
